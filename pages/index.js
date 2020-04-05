@@ -1,7 +1,8 @@
 import React, { component, Fragment } from "react";
 import fetch from "isomorphic-unfetch";
-import SearchBox from "../app/transaction/components/TransactionsSearchBox";
 import TransactionsList from "../app/transaction/components/TransactionsList";
+import SearchIcon from "@material-ui/icons/Search";
+import TextField from "@material-ui/core/TextField";
 
 class Home extends React.Component {
   static async getInitialProps(ctx) {
@@ -20,12 +21,12 @@ class Home extends React.Component {
     super(props);
 
     this.state = {
-      query: ""
+      query: "",
     };
   }
 
   filteredTransactionList() {
-    let filteredTransactionList = this.props.transactionList.filter(item => {
+    let filteredTransactionList = this.props.transactionList.filter((item) => {
       return (
         item.beneficiary_name
           .toLowerCase()
@@ -36,22 +37,41 @@ class Home extends React.Component {
   }
 
   render() {
+    const container = {
+      maxWidth: "440px",
+      minHeight: "100vh",
+      margin: "0 auto",
+      backgroundColor: "#D3D3D3",
+      borderTop: "5px solid #FF4500",
+      paddingTop: "8px",
+    };
+    const searchWrapper = {
+      backgroundColor: "#fff",
+      maxWidth: "420px",
+      marginLeft: "auto",
+      marginRight: "auto",
+      marginBottom: "8px",
+      borderRadius: "4px",
+      padding: "8px 4px",
+    };
     return (
       <Fragment>
-        {/* <SearchBox onChange={this.updateSearch.bind(this)}></SearchBox> */}
-        <div>
-          <label htmlFor="filter">Cari nama</label>
-          <input
-            type="text"
-            id="filter"
-            value={this.state.query}
-            onChange={this.updateSearch.bind(this)}
-          />
-        </div>
-        <div>
-          {this.filteredTransactionList().map(item => (
-            <TransactionsList transactionsList={item}></TransactionsList>
-          ))}
+        <div style={container}>
+          <div style={searchWrapper}>
+            <SearchIcon />
+            <TextField
+              size="small"
+              defaultValue="Small"
+              placeholder="Cari nama"
+              value={this.state.query}
+              onChange={this.updateSearch.bind(this)}
+            />
+          </div>
+          <div>
+            {this.filteredTransactionList().map((item) => (
+              <TransactionsList transactionsList={item}></TransactionsList>
+            ))}
+          </div>
         </div>
       </Fragment>
     );
