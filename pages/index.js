@@ -9,7 +9,6 @@ class Home extends React.Component {
     const res = await fetch("https://nextar.flip.id/frontend-test");
     const data = await res.json();
     const dataToArray = Object.values(data);
-    console.log("Home -> getInitialProps -> dataToArray", dataToArray);
     return { transactionList: dataToArray };
   }
 
